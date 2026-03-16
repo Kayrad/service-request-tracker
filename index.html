@@ -15,164 +15,37 @@
             --danger: #ff4d4d;
             --warning: #f1c40f;
         }
-        
         * { box-sizing: border-box; font-family: 'Chakra Petch', sans-serif; }
-        
-        /* ปรับพื้นฐานสำหรับ Mobile First */
-        body { 
-            background-color: var(--bg-color); 
-            margin: 0; 
-            padding: 0; 
-            font-size: 16px; /* มาตรฐานมือถือป้องกันการซูมเข้าอัตโนมัติ */
-        }
-
+        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; }
         h1 { font-size: 1.8rem; text-align: center; }
         h2 { font-size: 1.4rem; }
-
-        /* หน้าเลือก User */
-        #userSelectionPage { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            padding: 20px; 
-        }
-        
-        .user-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
-            gap: 12px; 
-            width: 100%; 
-            max-width: 800px; 
-            margin-top: 20px; 
-        }
-
-        .user-card { 
-            background: white; 
-            padding: 20px 10px; 
-            border-radius: 15px; 
-            text-align: center; 
-            cursor: pointer; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
-            border-bottom: 4px solid #ddd; 
-            transition: 0.3s; 
-        }
+        #userSelectionPage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; width: 100%; max-width: 800px; margin-top: 20px; }
+        .user-card { background: white; padding: 20px 10px; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-bottom: 4px solid #ddd; transition: 0.3s; }
         .user-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
-
-        /* Dashboard */
         #mainDashboard { display: none; padding: 10px; max-width: 1200px; margin: auto; }
-        
-        .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: white; 
-            padding: 12px 15px; 
-            border-radius: 12px; 
-            margin-bottom: 15px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
-        }
-
-        .card { 
-            background: white; 
-            padding: 15px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            margin-bottom: 15px; 
-        }
-
-        /* ปรับแต่งปฏิทินให้เล็กลงในมือถือ */
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .fc { font-size: 0.85rem; }
         .fc-toolbar-title { font-size: 1.1rem !important; }
         .fc .fc-button { padding: 4px 8px; font-size: 0.8rem; }
-
-        /* สรุปสถานะงาน (Stats Bar) */
-        .summary-header { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-bottom: 15px; 
-        }
-        
-        .stats-group { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 8px; 
-            width: 100%;
-        }
-        
-        .stat-item { 
-            padding: 10px 5px; 
-            border-radius: 10px; 
-            font-weight: bold; 
-            font-size: 0.75rem; 
-            text-align: center;
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-        }
-        
-        /* Table Layout สำหรับ Mobile */
-        .table-container { 
-            overflow-x: auto; 
-            -webkit-overflow-scrolling: touch; 
-            border-radius: 8px;
-        }
-        
+        .summary-header { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
+        .stats-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; width: 100%; }
+        .stat-item { padding: 10px 5px; border-radius: 10px; font-weight: bold; font-size: 0.75rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
         table { width: 100%; min-width: 500px; border-collapse: collapse; }
         th { background: #f8f9fa; text-align: left; padding: 10px; border-bottom: 2px solid #eee; font-size: 0.85rem; }
         td { padding: 10px; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-        
         .status-badge { padding: 3px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; color: white; }
-
-        /* ปุ่มกดแบบ Responsive */
-        .btn { 
-            padding: 10px 16px; 
-            border: none; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 0.9rem; 
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .btn { padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; }
         .btn-view { background: var(--primary-color); color: var(--dark-blue); width: 100%; }
         .btn-export { background: #27ae60; color: white; width: 100%; }
         .btn-outline { background: #eee; color: #555; }
         .btn-main { background: var(--primary-color); color: var(--dark-blue); width: 100%; margin-top: 10px; padding: 15px; }
-
-        /* Modal ปรับขนาดตามหน้าจอ */
-        .modal-content { 
-            background: white; 
-            width: 95%; 
-            max-width: 450px; 
-            margin: 10vh auto; 
-            padding: 20px; 
-            border-radius: 20px; 
-            position: relative;
-        }
-        
-        input, textarea { 
-            width: 100%; 
-            padding: 14px; 
-            margin-bottom: 12px; 
-            border: 1px solid #ddd; 
-            border-radius: 10px; 
-            font-size: 16px; /* กันซูมใน iOS */
-        }
-        
-        .info-box { 
-            background: #f8f9fa; 
-            padding: 12px; 
-            border-radius: 12px; 
-            margin-bottom: 10px; 
-            border-left: 5px solid var(--primary-color);
-            font-size: 0.9rem;
-        }
-
-        /* Desktop Adjustments (หน้าจอใหญ่กว่า 768px) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+        .modal-content { background: white; width: 95%; max-width: 450px; margin: 10vh auto; padding: 20px; border-radius: 20px; position: relative; }
+        input, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
+        .info-box { background: #f8f9fa; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary-color); font-size: 0.9rem; }
         @media (min-width: 768px) {
             #mainDashboard { padding: 30px 20px; }
             .header { padding: 15px 25px; margin-bottom: 25px; }
@@ -219,7 +92,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>รหัส SR</th>
+                            <th>รหัส Service Request</th>
                             <th>กำหนดเสร็จ</th>
                             <th>สถานะ</th>
                             <th style="text-align: center;">แอคชั่น</th>
@@ -239,7 +112,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Firebase Config (คงเดิมของคุณไว้)
         const firebaseConfig = {
             apiKey: "AIzaSyAMtvCPhB2bZtxVS7PbBTxPvlZctYu7LUY",
             authDomain: "servicerequest-eb5bc.firebaseapp.com",
@@ -274,10 +146,25 @@
             height: 'auto',
             contentHeight: 'auto',
             handleWindowResize: true,
-            dateClick: (info) => openAddTaskModal(info.dateStr),
-            eventClick: (info) => openManageTaskModal(info.event.id),
+            // แก้ไข: ให้เรียกใช้ handleInteraction ทั้งคู่
+            dateClick: (info) => handleInteraction(info.dateStr),
+            eventClick: (info) => handleInteraction(info.event.startStr, info.event.id), 
             events: []
         });
+
+        // ฟังก์ชันจัดการการคลิกปฏิทินแบบรวมศูนย์
+        function handleInteraction(dateStr, eventId = null) {
+            if (eventId) {
+                window.openManageTaskModal(eventId);
+            } else {
+                const existingTask = myTasks.find(t => t.deadline === dateStr);
+                if (existingTask) {
+                    window.openManageTaskModal(existingTask.id);
+                } else {
+                    window.openAddTaskModal(dateStr);
+                }
+            }
+        }
 
         window.login = (id, name) => {
             currentUser = { id, name };
@@ -339,7 +226,7 @@
             const t = myTasks.find(item => item.id === id);
             document.getElementById('modalBody').innerHTML = `
                 <h3 style="margin: 0 0 15px 0; color: var(--dark-blue);">รายละเอียดงาน</h3>
-                <div class="info-box"><strong>รหัส SR:</strong><br>${t.srCode}</div>
+                <div class="info-box"><strong>รหัส Service Request:</strong><br>${t.srCode}</div>
                 <div class="info-box"><strong>รายละเอียด:</strong><br>${t.detail || '-'}</div>
                 <div class="info-box"><strong>กำหนดเสร็จ:</strong> ${t.deadline}</div>
                 <button class="btn btn-outline" style="width:100%; padding: 12px;" onclick="closeModal()">ปิด</button>
@@ -350,7 +237,7 @@
         window.openAddTaskModal = (date) => {
             document.getElementById('modalBody').innerHTML = `
                 <h3 style="margin: 0 0 15px 0;">บันทึกงาน (${date})</h3>
-                <input type="text" id="srCode" placeholder="รหัส SR">
+                <input type="text" id="srCode" placeholder="รหัส Service Request">
                 <textarea id="taskDetail" placeholder="ระบุรายละเอียดงาน..." rows="3"></textarea>
                 <button class="btn btn-main" onclick="saveTask('${date}')">บันทึกข้อมูล</button>
                 <button class="btn btn-outline" style="width:100%; margin-top:10px; padding:12px;" onclick="closeModal()">ยกเลิก</button>
@@ -362,7 +249,7 @@
             const task = myTasks.find(t => t.id === id);
             document.getElementById('modalBody').innerHTML = `
                 <h3 style="margin: 0 0 15px 0;">จัดการงาน</h3>
-                <p><strong>SR:</strong> ${task.srCode}</p>
+                <p><strong>รหัส Service Request:</strong> ${task.srCode}</p>
                 <button class="btn btn-main" style="background:var(--success); color:white; margin-top:0;" onclick="updateStatus('${id}', 'done')">✔️ เปลี่ยนเป็นเสร็จสิ้น</button>
                 <button class="btn btn-outline" style="width:100%; color:red; margin-top:10px; padding:12px;" onclick="deleteTask('${id}')">🗑️ ลบงานนี้</button>
                 <button class="btn btn-outline" style="width:100%; margin-top:10px; padding:12px;" onclick="closeModal()">ปิดหน้าต่าง</button>
@@ -370,7 +257,6 @@
             document.getElementById('appModal').style.display = 'block';
         };
 
-        // Function Logic (คงเดิม)
         window.saveTask = (date) => {
             const code = document.getElementById('srCode').value.trim();
             const detail = document.getElementById('taskDetail').value.trim();
@@ -388,7 +274,7 @@
         window.saveUser = () => { const n = document.getElementById('newName').value.trim(); if(n) { push(ref(db, 'users'), { name: n }); closeModal(); } };
         window.closeModal = () => document.getElementById('appModal').style.display = 'none';
         window.exportToCSV = () => {
-            let csv = "\uFEFFรหัส SR,กำหนดเสร็จ,สถานะ,รายละเอียด\n";
+            let csv = "\uFEFFรหัส Service Request,กำหนดเสร็จ,สถานะ,รายละเอียด\n";
             myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จ' : 'ค้าง'}","${t.detail}"\n`);
             const link = document.createElement("a");
             link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
