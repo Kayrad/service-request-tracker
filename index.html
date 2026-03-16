@@ -10,6 +10,7 @@
         :root {
             --primary-color: #003366;
             --bg-color: #f4f7fa;
+            --card-bg: #ffffff;
             --success-color: #2ecc71;
             --pending-color: #00aaff;
             --text-main: #333333;
@@ -29,12 +30,13 @@
         .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
         .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
 
-        /* --- แก้ไขปฏิทินให้ Responsive --- */
-        #calendar { background: white; border-radius: 12px; padding: 5px; }
+        /* --- จุดที่แก้ไข: ปฏิทินแบบไม่ล้นจอ --- */
+        #calendar { background: white; border-radius: 12px; padding: 5px; overflow: hidden; max-width: 100%; }
         .fc-toolbar { flex-direction: column; gap: 8px; }
         .fc-toolbar-title { font-size: 1.1rem !important; }
         .fc-button { padding: 4px 8px !important; font-size: 0.8rem !important; }
         .fc-list-event { cursor: pointer; }
+        .fc-daygrid-day-number { font-size: 0.8rem; }
 
         /* Stats Bar */
         .summary-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
@@ -60,7 +62,7 @@
             .fc-toolbar { flex-direction: row; justify-content: space-between; }
             .fc-toolbar-title { font-size: 1.3rem !important; }
             .summary-header { flex-direction: row; align-items: center; justify-content: space-between; }
-            .stats-group { display: flex; width: auto; }
+            .stats-group { width: auto; }
             .stat-item { width: 120px; font-size: 0.85rem; flex-direction: row; gap: 10px; }
             .btn-main { width: auto; }
         }
@@ -124,7 +126,7 @@
         const db = getDatabase(app);
         let currentUser = null, myTasks = [];
 
-        // ฟังก์ชันเลือกโหมดปฏิทินตามขนาดจอ
+        // ฟังชันเลือกมุมมองตามขนาดหน้าจอ
         const getCalendarView = () => window.innerWidth < 768 ? 'listMonth' : 'dayGridMonth';
 
         const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
@@ -198,7 +200,7 @@
             document.getElementById('pendingTasks').innerText = myTasks.length - done;
         }
 
-        // --- ฟังชันเดิมของคุณอยู่ครบทั้งหมดที่นี่ ---
+        // --- ฟังชันเดิมของคุณ ---
         window.openAddTaskModal = (date) => {
             document.getElementById('modalBody').innerHTML = `<h3>บันทึกงานใหม่</h3><p>${date}</p><input type="text" id="srCode" placeholder="รหัส Service Request"><textarea id="taskDetail" placeholder="รายละเอียดงาน" rows="3"></textarea><button class="btn btn-main" onclick="saveTask('${date}')">บันทึก</button><button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal()">ยกเลิก</button>`;
             document.getElementById('appModal').style.display = 'block';
@@ -226,6 +228,7 @@
         window.closeModal = () => document.getElementById('appModal').style.display = 'none';
         window.logout = () => location.reload();
 
+        // ปรับขนาดอัตโนมัติเมื่อหมุนจอ
         window.addEventListener('resize', () => {
             const newView = getCalendarView();
             if (calendar.view.type !== newView) { calendar.changeView(newView); }
