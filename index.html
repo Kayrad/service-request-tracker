@@ -11,53 +11,50 @@
             --primary-color: #003366;
             --bg-color: #f4f7fa;
             --card-bg: #ffffff;
-            --success-color: #2ecc71; /* สีเขียว */
-            --pending-color: #00aaff; /* สีน้ำเงิน */
+            --success-color: #2ecc71;
+            --pending-color: #00aaff;
             --text-main: #333333;
         }
         
         * { box-sizing: border-box; font-family: 'Chakra Petch', sans-serif; }
-        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; color: var(--text-main); -webkit-text-size-adjust: 100%; }
+        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; color: var(--text-main); -webkit-tap-highlight-color: transparent; }
 
         /* หน้าเลือก User */
         #userSelectionPage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; width: 100%; max-width: 800px; margin-top: 20px; }
         .user-card { background: var(--card-bg); padding: 20px 10px; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid transparent; }
-        .user-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
-        .user-icon { font-size: 2rem; margin-bottom: 10px; color: var(--primary-color); }
+        .user-card:hover { border-color: var(--primary-color); transform: translateY(-3px); }
 
         /* Dashboard */
         #mainDashboard { display: none; padding: 10px; max-width: 1200px; margin: auto; }
         .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
         .card { background: var(--card-bg); padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
 
-        /* ปรับแต่งปฏิทินสำหรับมือถือ */
-        .fc { background: white; border-radius: 10px; padding: 5px; }
+        /* สรุปสถานะงาน (Stats Bar) */
+        .summary-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .stats-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; }
+        .stat-item { padding: 10px 5px; border-radius: 10px; font-weight: bold; font-size: 0.7rem; text-align: center; display: flex; flex-direction: column; background: #fff; border: 1px solid #eee; }
+        
+        /* ปรับแต่งปฏิทินให้ Responsive */
+        .fc { background: white; border-radius: 12px; padding: 5px; }
         .fc-toolbar { flex-direction: column; gap: 10px; }
         .fc-toolbar-title { font-size: 1.1rem !important; }
         .fc-header-toolbar { margin-bottom: 1em !important; }
-        .fc-daygrid-day-number { font-size: 0.85rem; }
-        .fc-col-header-cell-cushion { font-size: 0.8rem; }
-        
-        /* ปรับ Event ในปฏิทินให้เล็กลงเมื่ออยู่ในมือถือ */
-        .fc-event { border: none !important; font-size: 0.75rem !important; padding: 1px 2px !important; }
+        .fc-daygrid-day-number { font-size: 0.8rem; }
+        .fc-col-header-cell-cushion { font-size: 0.75rem; }
+        .fc-event { border: none !important; font-size: 0.7rem !important; padding: 1px 2px !important; border-radius: 4px !important; }
 
-        /* Stats & Summary */
-        .summary-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
-        .stats-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 100%; }
-        .stat-item { padding: 10px 5px; border-radius: 10px; font-weight: bold; font-size: 0.7rem; text-align: center; display: flex; flex-direction: column; background: #fff; border: 1px solid #eee; }
-        
+        /* Table สำหรับ Mobile */
         .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; border: 1px solid #eee; }
-        table { width: 100%; min-width: 450px; border-collapse: collapse; }
-        th { background: #fcfcfc; text-align: left; padding: 10px; border-bottom: 2px solid #eee; font-size: 0.8rem; color: #666; }
-        td { padding: 10px; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
-        
-        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: #fff; display: inline-block; }
+        table { width: 100%; min-width: 480px; border-collapse: collapse; }
+        th { background: #fcfcfc; text-align: left; padding: 12px 10px; border-bottom: 2px solid #eee; font-size: 0.8rem; color: #666; }
+        td { padding: 12px 10px; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: #fff; }
 
         /* Buttons */
         .btn { padding: 10px 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; }
         .btn-main { background: var(--primary-color); color: white; width: 100%; }
-        .btn-view { background: #f0f7ff; color: var(--primary-color); width: 100%; font-size: 0.75rem; }
+        .btn-view { background: #f0f7ff; color: var(--primary-color); font-size: 0.75rem; width: 100%; }
         .btn-export { background: #e8f5e9; color: #2e7d32; width: 100%; }
         .btn-outline { background: #f0f0f0; color: #555; }
 
@@ -67,13 +64,14 @@
         input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1.5px solid #eee; border-radius: 10px; font-size: 16px; outline: none; }
         .info-box { background: #f9f9f9; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary-color); font-size: 0.9rem; }
 
+        /* Desktop Style (กว้างกว่า 768px) */
         @media (min-width: 768px) {
             #mainDashboard { padding: 20px; }
             .fc-toolbar { flex-direction: row; justify-content: space-between; }
             .fc-toolbar-title { font-size: 1.3rem !important; }
             .summary-header { flex-direction: row; align-items: center; justify-content: space-between; }
-            .stats-group { width: auto; display: flex; }
-            .stat-item { flex: none; width: 120px; font-size: 0.85rem; flex-direction: row; gap: 10px; }
+            .stats-group { display: flex; width: auto; }
+            .stat-item { width: 120px; font-size: 0.85rem; flex-direction: row; gap: 10px; }
             .btn-export, .btn-main { width: auto; }
             .btn-view { width: auto; padding: 5px 15px; }
         }
@@ -83,7 +81,7 @@
 
     <div id="userSelectionPage">
         <h1 style="color: var(--primary-color); margin-bottom: 5px;">Service Request</h1>
-        <p style="color: #666; margin-bottom: 25px;">กรุณาเลือกรายชื่อเพื่อเริ่มต้นใช้งาน</p>
+        <p style="color: #666; margin-bottom: 25px;">เลือกรายชื่อเพื่อเริ่มต้นทำงาน</p>
         <div class="user-grid" id="userList"></div>
         <button class="btn btn-outline" style="margin-top: 30px;" onclick="openAddUserModal()">+ เพิ่มรายชื่อพนักงาน</button>
     </div>
@@ -154,7 +152,7 @@
                 Object.entries(snapshot.val()).forEach(([id, data]) => {
                     const div = document.createElement('div');
                     div.className = 'user-card';
-                    div.innerHTML = `<div class="user-icon">👤</div><div style="font-weight:bold; font-size: 0.85rem;">${data.name}</div>`;
+                    div.innerHTML = `<div style="font-size: 1.5rem;">👤</div><div style="font-weight:bold; font-size: 0.85rem; margin-top:5px;">${data.name}</div>`;
                     div.onclick = () => login(id, data.name);
                     userList.appendChild(div);
                 });
@@ -165,7 +163,9 @@
             locale: 'th', initialView: 'dayGridMonth',
             height: 'auto',
             handleWindowResize: true,
-            aspectRatio: 1.35, // ปรับสัดส่วนปฏิทินให้เหมาะกับมือถือ
+            windowResizeDelay: 100,
+            // ปรับสัดส่วนปฏิทินตามขนาดหน้าจอ
+            aspectRatio: window.innerWidth < 768 ? 0.8 : 1.35, 
             dateClick: (info) => handleInteraction(info.dateStr),
             eventClick: (info) => handleInteraction(info.event.startStr, info.event.id), 
             events: []
@@ -186,7 +186,12 @@
             document.getElementById('mainDashboard').style.display = 'block';
             document.getElementById('currentUserName').innerText = `พนักงาน: ${name}`;
             loadTasks();
-            setTimeout(() => { calendar.render(); calendar.updateSize(); }, 200);
+            setTimeout(() => { 
+                calendar.render(); 
+                // บังคับให้ปฏิทินคำนวณขนาดใหม่ตามหน้าจอมือถือ
+                calendar.setOption('aspectRatio', window.innerWidth < 768 ? 0.8 : 1.35);
+                calendar.updateSize(); 
+            }, 300);
         };
 
         window.logout = () => { location.reload(); };
@@ -200,7 +205,7 @@
                         .filter(t => t.ownerId === currentUser.id);
                 }
                 const events = myTasks.map(t => ({
-                    id: t.id, title: `SR: ${t.srCode}`, start: t.deadline,
+                    id: t.id, title: `${t.srCode}`, start: t.deadline,
                     color: t.status === 'done' ? '#2ecc71' : '#00aaff',
                     textColor: '#ffffff'
                 }));
@@ -260,7 +265,7 @@
             const task = myTasks.find(t => t.id === id);
             document.getElementById('modalBody').innerHTML = `
                 <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">จัดการงาน</h3>
-                <p style="margin-bottom: 20px;"><strong>Service Request:</strong> ${task.srCode}</p>
+                <p style="margin-bottom: 20px; font-size: 0.95rem;"><strong>Service Request:</strong> ${task.srCode}</p>
                 <button class="btn btn-main" style="background:var(--success-color); color:white; margin-top:0;" onclick="updateStatus('${id}', 'done')">✔️ เสร็จสิ้น</button>
                 <button class="btn btn-outline" style="width:100%; color:#d32f2f; margin-top:10px;" onclick="deleteTask('${id}')">🗑️ ลบงานนี้</button>
                 <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal()">ปิดหน้าต่าง</button>
@@ -277,7 +282,7 @@
             }
         };
         window.updateStatus = (id, status) => { update(ref(db, `service_requests/${id}`), { status: status }); closeModal(); };
-        window.deleteTask = (id) => { if(confirm("ต้องการลบงานนี้?")) { remove(ref(db, `service_requests/${id}`)); closeModal(); } };
+        window.deleteTask = (id) => { if(confirm("ต้องการลบงานนี้ออกจากระบบ?")) { remove(ref(db, `service_requests/${id}`)); closeModal(); } };
         window.openAddUserModal = () => {
             document.getElementById('modalBody').innerHTML = `<h3>เพิ่มพนักงาน</h3><input type="text" id="newName" placeholder="ชื่อ-นามสกุล"><button class="btn btn-main" onclick="saveUser()">บันทึก</button><button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal()">ยกเลิก</button>`;
             document.getElementById('appModal').style.display = 'block';
@@ -286,7 +291,7 @@
         window.closeModal = () => document.getElementById('appModal').style.display = 'none';
         window.exportToCSV = () => {
             let csv = "\uFEFFรหัส Service Request,กำหนดเสร็จ,สถานะ,รายละเอียด\n";
-            myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จสิ้น' : 'กำลังทำ'}","${t.detail}"\n`);
+            myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จสิ้น' : 'กำลังดำเนินการ'}","${t.detail}"\n`);
             const link = document.createElement("a");
             link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
             link.download = `Report_${currentUser.name}.csv`; link.click();
