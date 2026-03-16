@@ -3,70 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Service Request Tracker - Responsive</title>
+    <title>Service Request Tracker</title>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #66deff;
-            --bg-color: #f0f4f9;
-            --dark-blue: #1a3c4a;
-            --success: #2ecc71;
-            --danger: #ff4d4d;
-            --warning: #f1c40f;
+            --primary-color: #003366; /* สีน้ำเงินเข้ม */
+            --bg-color: #f4f7fa;
+            --card-bg: #ffffff;
+            --success-color: #2ecc71; /* เปลี่ยนเป็นสีเขียว */
+            --pending-color: #00aaff; /* เปลี่ยนเป็นสีน้ำเงิน */
+            --text-main: #333333;
         }
+        
         * { box-sizing: border-box; font-family: 'Chakra Petch', sans-serif; }
-        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; }
-        h1 { font-size: 1.8rem; text-align: center; }
+        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; color: var(--text-main); }
+
+        /* หน้าเลือก User */
         #userSelectionPage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; width: 100%; max-width: 800px; margin-top: 20px; }
-        .user-card { background: white; padding: 20px 10px; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-bottom: 4px solid #ddd; transition: 0.3s; }
+        .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; width: 100%; max-width: 800px; margin-top: 20px; }
+        .user-card { background: var(--card-bg); padding: 25px 15px; border-radius: 20px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid transparent; }
         .user-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
-        #mainDashboard { display: none; padding: 10px; max-width: 1200px; margin: auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
-        .fc { font-size: 0.85rem; }
+        .user-icon { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary-color); }
+
+        /* Dashboard */
+        #mainDashboard { display: none; padding: 15px; max-width: 1200px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .card { background: var(--card-bg); padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+
+        /* Stats & Summary */
         .summary-header { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
-        .stats-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; width: 100%; }
-        .stat-item { padding: 10px 5px; border-radius: 10px; font-weight: bold; font-size: 0.75rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
+        .stats-group { display: flex; gap: 10px; flex-wrap: wrap; width: 100%; }
+        .stat-item { flex: 1; min-width: 100px; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; text-align: center; display: flex; flex-direction: column; gap: 5px; background: #fff; border: 1px solid #eee; }
+        
+        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; border: 1px solid #eee; }
         table { width: 100%; min-width: 500px; border-collapse: collapse; }
-        th { background: #f8f9fa; text-align: left; padding: 10px; border-bottom: 2px solid #eee; font-size: 0.85rem; }
-        td { padding: 10px; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-        .status-badge { padding: 3px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; color: white; }
-        .btn { padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; }
-        .btn-view { background: var(--primary-color); color: var(--dark-blue); width: 100%; }
-        .btn-export { background: #27ae60; color: white; width: 100%; }
-        .btn-outline { background: #eee; color: #555; }
-        .btn-main { background: var(--primary-color); color: var(--dark-blue); width: 100%; margin-top: 10px; padding: 15px; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-        .modal-content { background: white; width: 95%; max-width: 450px; margin: 10vh auto; padding: 20px; border-radius: 20px; }
-        input, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
-        .info-box { background: #f8f9fa; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary-color); font-size: 0.9rem; }
+        th { background: #fcfcfc; text-align: left; padding: 15px; border-bottom: 2px solid #eee; font-size: 0.9rem; color: #666; }
+        td { padding: 15px; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; }
+        
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; color: #fff; }
+
+        /* Buttons */
+        .btn { padding: 10px 18px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-main { background: var(--primary-color); color: white; width: 100%; margin-top: 10px; }
+        .btn-view { background: #f0f7ff; color: var(--primary-color); border: 1px solid #d0e5ff; }
+        .btn-export { background: #e8f5e9; color: #2e7d32; width: 100%; }
+        .btn-outline { background: #f0f0f0; color: #555; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+        .modal-content { background: white; width: 92%; max-width: 450px; margin: 10vh auto; padding: 25px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        input, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1.5px solid #eee; border-radius: 12px; font-size: 16px; outline: none; }
+        .info-box { background: #f9f9f9; padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 5px solid var(--primary-color); }
+
         @media (min-width: 768px) {
             #mainDashboard { padding: 30px 20px; }
-            .summary-header { flex-direction: row; }
-            .stats-group { width: auto; display: flex; }
-            .stat-item { font-size: 0.9rem; flex-direction: row; padding: 8px 15px; }
-            .btn-export, .btn-view { width: auto; }
+            .summary-header { flex-direction: row; align-items: center; justify-content: space-between; }
+            .stats-group { width: auto; }
+            .btn-export { width: auto; }
+            .btn-main { width: auto; margin-top: 0; }
         }
     </style>
 </head>
 <body>
 
     <div id="userSelectionPage">
-        <h1 style="color: var(--dark-blue);">Service Request</h1>
+        <h1 style="color: var(--primary-color); margin-bottom: 5px;">Service Request</h1>
+        <p style="color: #666; margin-bottom: 25px;">กรุณาเลือกรายชื่อเพื่อเริ่มต้นทำงาน</p>
         <div class="user-grid" id="userList"></div>
-        <button class="btn btn-outline" style="margin-top: 25px;" onclick="openAddUserModal()">+ เพิ่มรายชื่อพนักงาน</button>
+        <button class="btn btn-outline" style="margin-top: 30px; padding: 12px 25px;" onclick="openAddUserModal()">+ เพิ่มรายชื่อพนักงาน</button>
     </div>
 
     <div id="mainDashboard">
         <div class="header">
             <div>
-                <h2 style="margin:0; font-size: 1.1rem;">Dashboard</h2>
+                <h2 style="font-size: 1.2rem;">Service Request</h2>
                 <small id="currentUserName" style="color: var(--primary-color); font-weight: bold;"></small>
             </div>
-            <button class="btn btn-outline" style="padding: 8px 12px; font-size: 0.8rem;" onclick="logout()">ออกจากระบบ</button>
+            <button class="btn btn-outline" style="padding: 8px 15px; font-size: 0.8rem;" onclick="logout()">ออกจากระบบ</button>
         </div>
 
         <div class="card"><div id="calendar"></div></div>
@@ -74,9 +88,9 @@
         <div class="card">
             <div class="summary-header">
                 <div class="stats-group">
-                    <div class="stat-item" style="background: #eef5ff; color: #1a73e8;"><span>🔵 ทั้งหมด</span> <span id="totalTasks">0</span></div>
-                    <div class="stat-item" style="background: #e8f5e9; color: #2e7d32;"><span>🟢 เสร็จแล้ว</span> <span id="doneTasks">0</span></div>
-                    <div class="stat-item" style="background: #fff5f5; color: #c62828;"><span>🔴 ยังไม่เสร็จ</span> <span id="pendingTasks">0</span></div>
+                    <div class="stat-item" style="border-top: 4px solid #1a73e8;"><span>ทั้งหมด</span> <span id="totalTasks" style="font-size: 1.2rem; color: #1a73e8;">0</span></div>
+                    <div class="stat-item" style="border-top: 4px solid var(--success-color);"><span>เสร็จสิ้น</span> <span id="doneTasks" style="font-size: 1.2rem; color: var(--success-color);">0</span></div>
+                    <div class="stat-item" style="border-top: 4px solid var(--pending-color);"><span>กำลังดำเนินการ</span> <span id="pendingTasks" style="font-size: 1.2rem; color: var(--pending-color);">0</span></div>
                 </div>
                 <button class="btn btn-export" onclick="exportToCSV()">📊 Export Excel</button>
             </div>
@@ -126,7 +140,7 @@
                 Object.entries(snapshot.val()).forEach(([id, data]) => {
                     const div = document.createElement('div');
                     div.className = 'user-card';
-                    div.innerHTML = `<div style="font-size: 1.5rem;">👤</div><div style="font-size: 0.9rem; margin-top:5px;">${data.name}</div>`;
+                    div.innerHTML = `<div class="user-icon">👤</div><div style="font-weight:bold; font-size: 0.95rem;">${data.name}</div>`;
                     div.onclick = () => login(id, data.name);
                     userList.appendChild(div);
                 });
@@ -176,7 +190,8 @@
                 }
                 const events = myTasks.map(t => ({
                     id: t.id, title: `SR: ${t.srCode}`, start: t.deadline,
-                    color: t.status === 'done' ? '#2ecc71' : '#ff4d4d'
+                    color: t.status === 'done' ? '#2ecc71' : '#00aaff', // แก้ไขสีปฏิทิน
+                    textColor: '#ffffff'
                 }));
                 calendar.removeAllEvents();
                 calendar.addEventSource(events);
@@ -194,10 +209,10 @@
                 if (isDone) doneCount++;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><b>${t.srCode}</b></td>
+                    <td><b style="color:var(--primary-color)">${t.srCode}</b></td>
                     <td>${t.deadline}</td>
-                    <td><span class="status-badge" style="background:${isDone ? 'var(--success)' : 'var(--danger)'}">${isDone ? 'เสร็จ' : 'ค้าง'}</span></td>
-                    <td style="text-align: center;"><button class="btn btn-view" style="padding: 5px 10px; font-size: 0.75rem;" onclick="viewTaskDetail('${t.id}')">ดูงาน</button></td>
+                    <td><span class="status-badge" style="background:${isDone ? 'var(--success-color)' : 'var(--pending-color)'}">${isDone ? 'เสร็จสิ้น' : 'กำลังดำเนินการ'}</span></td>
+                    <td style="text-align: center;"><button class="btn btn-view" style="padding: 5px 12px; font-size: 0.8rem;" onclick="viewTaskDetail('${t.id}')">ดูรายละเอียด</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -209,18 +224,19 @@
         window.viewTaskDetail = (id) => {
             const t = myTasks.find(item => item.id === id);
             document.getElementById('modalBody').innerHTML = `
-                <h3 style="margin: 0 0 15px 0;">รายละเอียดงาน</h3>
+                <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">รายละเอียดงาน</h3>
                 <div class="info-box"><strong>รหัส Service Request:</strong><br>${t.srCode}</div>
                 <div class="info-box"><strong>รายละเอียด:</strong><br>${t.detail || '-'}</div>
                 <div class="info-box"><strong>กำหนดเสร็จ:</strong> ${t.deadline}</div>
-                <button class="btn btn-outline" style="width:100%; padding: 12px;" onclick="closeModal()">ปิด</button>
+                <button class="btn btn-outline" style="width:100%; padding: 12px;" onclick="closeModal()">ปิดหน้าต่าง</button>
             `;
             document.getElementById('appModal').style.display = 'block';
         };
 
         window.openAddTaskModal = (date) => {
             document.getElementById('modalBody').innerHTML = `
-                <h3 style="margin: 0 0 15px 0;">บันทึกงาน (${date})</h3>
+                <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">บันทึกงานใหม่</h3>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 15px;">กำหนดเสร็จ: ${date}</p>
                 <input type="text" id="srCode" placeholder="รหัส Service Request">
                 <textarea id="taskDetail" placeholder="ระบุรายละเอียดงาน..." rows="3"></textarea>
                 <button class="btn btn-main" onclick="saveTask('${date}')">บันทึกข้อมูล</button>
@@ -232,10 +248,10 @@
         window.openManageTaskModal = (id) => {
             const task = myTasks.find(t => t.id === id);
             document.getElementById('modalBody').innerHTML = `
-                <h3 style="margin: 0 0 15px 0;">จัดการงาน</h3>
-                <p><strong>รหัส Service Request:</strong> ${task.srCode}</p>
-                <button class="btn btn-main" style="background:var(--success); color:white; margin-top:0;" onclick="updateStatus('${id}', 'done')">✔️ เปลี่ยนเป็นเสร็จสิ้น</button>
-                <button class="btn btn-outline" style="width:100%; color:red; margin-top:10px; padding:12px;" onclick="deleteTask('${id}')">🗑️ ลบงานนี้</button>
+                <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">จัดการงาน</h3>
+                <p style="margin-bottom: 20px;"><strong>Service Request:</strong> ${task.srCode}</p>
+                <button class="btn btn-main" style="background:var(--success-color); color:white; margin-top:0;" onclick="updateStatus('${id}', 'done')">✔️ เปลี่ยนเป็นเสร็จสิ้น</button>
+                <button class="btn btn-outline" style="width:100%; color:#d32f2f; margin-top:10px; padding:12px;" onclick="deleteTask('${id}')">🗑️ ลบงานนี้</button>
                 <button class="btn btn-outline" style="width:100%; margin-top:10px; padding:12px;" onclick="closeModal()">ปิดหน้าต่าง</button>
             `;
             document.getElementById('appModal').style.display = 'block';
@@ -252,14 +268,18 @@
         window.updateStatus = (id, status) => { update(ref(db, `service_requests/${id}`), { status: status }); closeModal(); };
         window.deleteTask = (id) => { if(confirm("ต้องการลบงานนี้?")) { remove(ref(db, `service_requests/${id}`)); closeModal(); } };
         window.openAddUserModal = () => {
-            document.getElementById('modalBody').innerHTML = `<h3>เพิ่มพนักงาน</h3><input type="text" id="newName" placeholder="ชื่อ-นามสกุล"><button class="btn btn-main" onclick="saveUser()">บันทึก</button><button class="btn btn-outline" style="width:100%; margin-top:10px; padding:12px;" onclick="closeModal()">ยกเลิก</button>`;
+            document.getElementById('modalBody').innerHTML = `
+                <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">เพิ่มพนักงาน</h3>
+                <input type="text" id="newName" placeholder="ชื่อ-นามสกุล">
+                <button class="btn btn-main" onclick="saveUser()">บันทึกรายชื่อ</button>
+                <button class="btn btn-outline" style="width:100%; margin-top:10px; padding:12px;" onclick="closeModal()">ยกเลิก</button>`;
             document.getElementById('appModal').style.display = 'block';
         };
         window.saveUser = () => { const n = document.getElementById('newName').value.trim(); if(n) { push(ref(db, 'users'), { name: n }); closeModal(); } };
         window.closeModal = () => document.getElementById('appModal').style.display = 'none';
         window.exportToCSV = () => {
             let csv = "\uFEFFรหัส Service Request,กำหนดเสร็จ,สถานะ,รายละเอียด\n";
-            myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จ' : 'ค้าง'}","${t.detail}"\n`);
+            myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จสิ้น' : 'กำลังดำเนินการ'}","${t.detail}"\n`);
             const link = document.createElement("a");
             link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
             link.download = `Report_${currentUser.name}.csv`; link.click();
