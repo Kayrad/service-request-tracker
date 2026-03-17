@@ -13,6 +13,7 @@
             --card-bg: #ffffff;
             --success-color: #2ecc71;
             --pending-color: #00aaff;
+            --reschedule-color: #f39c12; /* สีสำหรับเลื่อนกำหนด */
             --text-main: #333333;
         }
         
@@ -27,7 +28,6 @@
         #mainDashboard { display: none; padding: 10px; max-width: 1200px; margin: auto; }
         .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
         
-        /* --- แก้ไขเฉพาะบล็อกปฏิทิน --- */
         .card-calendar { 
             background: var(--card-bg); 
             padding: 10px; 
@@ -35,19 +35,17 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             margin-bottom: 15px;
             width: 100%;
-            overflow-x: auto; /* ยอมให้เลื่อนซ้ายขวาได้ถ้าล้น */
+            overflow-x: auto;
         }
         #calendar { 
-            min-width: 300px; /* บังคับความกว้างขั้นต่ำไม่ให้เบี้ยว */
+            min-width: 300px;
             max-width: 100%;
         }
-        /* ปรับสเกลปฏิทินในมือถือ */
         @media (max-width: 768px) {
             .fc { font-size: 0.75rem !important; }
             .fc-toolbar-title { font-size: 0.9rem !important; }
             .fc-button { padding: 2px 5px !important; font-size: 0.7rem !important; }
         }
-        /* ------------------------- */
 
         .card { background: var(--card-bg); padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .summary-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
@@ -168,7 +166,7 @@
             locale: 'th', initialView: 'dayGridMonth',
             height: 'auto',
             handleWindowResize: true,
-            aspectRatio: window.innerWidth < 768 ? 0.8 : 1.35, // ปรับสัดส่วนให้คงที่ในมือถือ
+            aspectRatio: window.innerWidth < 768 ? 0.8 : 1.35,
             dateClick: (info) => handleInteraction(info.dateStr),
             eventClick: (info) => handleInteraction(info.event.startStr, info.event.id), 
             events: []
@@ -178,7 +176,7 @@
             if (eventId) {
                 window.openManageTaskModal(eventId);
             } else {
-                const existingTask = myTasks.find(t => t.deadline === dateStr);
+                const existingTask = myTasks.find(t => t.deadline === dateStr && t.status === 'pending');
                 if (existingTask) {
                     window.openManageTaskModal(existingTask.id);
                 } else {
@@ -206,7 +204,7 @@
                 }
                 const events = myTasks.map(t => ({
                     id: t.id, title: `${t.srCode}`, start: t.deadline,
-                    color: t.status === 'done' ? '#2ecc71' : '#00aaff',
+                    color: t.status === 'done' ? '#2ecc71' : (t.status === 'reschedule' ? '#f39c12' : '#00aaff'),
                     textColor: '#ffffff'
                 }));
                 calendar.removeAllEvents();
@@ -222,19 +220,20 @@
             myTasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
             myTasks.forEach(t => {
                 const isDone = t.status === 'done';
+                const isReschedule = t.status === 'reschedule';
                 if (isDone) doneCount++;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><b style="color:var(--primary-color)">${t.srCode}</b></td>
                     <td>${t.deadline}</td>
-                    <td><span class="status-badge" style="background:${isDone ? 'var(--success-color)' : 'var(--pending-color)'}">${isDone ? 'เสร็จสิ้น' : 'กำลังทำ'}</span></td>
+                    <td><span class="status-badge" style="background:${isDone ? 'var(--success-color)' : (isReschedule ? 'var(--reschedule-color)' : 'var(--pending-color)')}">${isDone ? 'เสร็จสิ้น' : (isReschedule ? 'เลื่อนกำหนด' : 'กำลังทำ')}</span></td>
                     <td style="text-align: center;"><button class="btn btn-view" onclick="viewTaskDetail('${t.id}')">ดูงาน</button></td>
                 `;
                 tbody.appendChild(tr);
             });
             document.getElementById('totalTasks').innerText = myTasks.length;
             document.getElementById('doneTasks').innerText = doneCount;
-            document.getElementById('pendingTasks').innerText = myTasks.length - doneCount;
+            document.getElementById('pendingTasks').innerText = myTasks.filter(t => t.status === 'pending').length;
         }
 
         window.viewTaskDetail = (id) => {
@@ -267,10 +266,43 @@
                 <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">จัดการงาน</h3>
                 <p style="margin-bottom: 20px; font-size: 0.95rem;"><strong>Service Request:</strong> ${task.srCode}</p>
                 <button class="btn btn-main" style="background:var(--success-color); color:white; margin-top:0;" onclick="updateStatus('${id}', 'done')">✔️ เสร็จสิ้น</button>
+                <button class="btn btn-main" style="background:var(--reschedule-color); color:white; margin-top:10px;" onclick="openRescheduleUI('${id}')">📅 เลื่อนกำหนด</button>
                 <button class="btn btn-outline" style="width:100%; color:#d32f2f; margin-top:10px;" onclick="deleteTask('${id}')">🗑️ ลบงานนี้</button>
                 <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal()">ปิดหน้าต่าง</button>
             `;
             document.getElementById('appModal').style.display = 'block';
+        };
+
+        window.openRescheduleUI = (id) => {
+            const task = myTasks.find(t => t.id === id);
+            document.getElementById('modalBody').innerHTML = `
+                <h3 style="margin: 0 0 15px 0; color: var(--primary-color)">เลื่อนกำหนดการ</h3>
+                <p style="font-size: 0.9rem;">เลือกวันที่ใหม่สำหรับ: <strong>${task.srCode}</strong></p>
+                <input type="date" id="newDateInput" min="${new Date().toISOString().split('T')[0]}">
+                <button class="btn btn-main" onclick="confirmReschedule('${id}')">ตกลงเลื่อน</button>
+                <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="openManageTaskModal('${id}')">ยกเลิก</button>
+            `;
+        };
+
+        window.confirmReschedule = async (id) => {
+            const newDate = document.getElementById('newDateInput').value;
+            if(!newDate) return alert("กรุณาเลือกวันที่");
+            
+            const oldTask = myTasks.find(t => t.id === id);
+            
+            // 1. อัพเดทงานเก่าเป็น "เลื่อนกำหนด"
+            await update(ref(db, `service_requests/${id}`), { status: 'reschedule' });
+            
+            // 2. สร้างงานใหม่ในวันที่ใหม่เป็น "กำลังทำ" (pending)
+            await push(ref(db, 'service_requests'), {
+                ownerId: currentUser.id,
+                srCode: oldTask.srCode,
+                detail: oldTask.detail || "",
+                deadline: newDate,
+                status: 'pending'
+            });
+            
+            closeModal();
         };
 
         window.saveTask = (date) => {
@@ -291,7 +323,7 @@
         window.closeModal = () => document.getElementById('appModal').style.display = 'none';
         window.exportToCSV = () => {
             let csv = "\uFEFFรหัส Service Request,กำหนดเสร็จ,สถานะ,รายละเอียด\n";
-            myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จสิ้น' : 'กำลังดำเนินการ'}","${t.detail}"\n`);
+            myTasks.forEach(t => csv += `"${t.srCode}","${t.deadline}","${t.status === 'done' ? 'เสร็จสิ้น' : (t.status === 'reschedule' ? 'เลื่อนกำหนด' : 'กำลังทำ')}","${t.detail}"\n`);
             const link = document.createElement("a");
             link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
             link.download = `Report_${currentUser.name}.csv`; link.click();
