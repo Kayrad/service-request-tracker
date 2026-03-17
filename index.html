@@ -12,56 +12,50 @@
             --bg-color: #f4f7fa;
             --success-color: #2ecc71;
             --pending-color: #00aaff;
-            --text-main: #333333;
         }
         
         * { box-sizing: border-box; font-family: 'Chakra Petch', sans-serif; }
-        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; color: var(--text-main); -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; overflow-x: hidden; }
 
         /* หน้าเลือก User */
         #userSelectionPage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; width: 100%; max-width: 800px; margin-top: 20px; }
-        .user-card { background: white; padding: 20px 10px; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-bottom: 4px solid #ddd; transition: 0.3s; }
-        .user-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
+        .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; width: 100%; max-width: 800px; }
+        .user-card { background: white; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-bottom: 4px solid #ddd; }
 
         /* Dashboard */
         #mainDashboard { display: none; padding: 10px; max-width: 1200px; margin: auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; }
+        .card { background: white; padding: 10px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 10px; }
 
-        /* --- ปรับแต่งปฏิทินให้แสดงผลแน่นอนในมือถือ --- */
-        #calendar { background: white; border-radius: 12px; padding: 5px; min-height: 350px; }
-        .fc-toolbar { flex-direction: column; gap: 8px; }
-        .fc-toolbar-title { font-size: 1.1rem !important; }
-        .fc-button { padding: 4px 8px !important; font-size: 0.8rem !important; }
+        /* --- ปรับแต่งปฏิทินให้แสดงผลเป็นตารางในมือถือและไม่ล้น --- */
+        #calendar { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 5px;
+            font-size: 0.75rem; /* ลดขนาดฟอนต์ในปฏิทินเพื่อให้พอดีจอ */
+        }
+        .fc-toolbar-title { font-size: 0.95rem !important; }
+        .fc-button { padding: 4px 6px !important; font-size: 0.7rem !important; }
+        .fc-daygrid-day-number { padding: 2px !important; }
+        .fc-event-title { font-size: 0.65rem; font-weight: bold; }
 
         /* Stats Bar */
-        .summary-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .stats-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; }
-        .stat-item { padding: 10px 5px; border-radius: 10px; font-weight: bold; font-size: 0.7rem; text-align: center; display: flex; flex-direction: column; background: #fff; border-top: 3px solid #ddd; }
-        
+        .stats-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 10px; }
+        .stat-item { padding: 8px 2px; border-radius: 8px; font-weight: bold; font-size: 0.65rem; text-align: center; background: #fff; border: 1px solid #eee; }
+
         /* Table */
-        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; border: 1px solid #eee; }
-        table { width: 100%; min-width: 480px; border-collapse: collapse; }
-        th { background: #fcfcfc; text-align: left; padding: 12px 10px; border-bottom: 2px solid #eee; font-size: 0.8rem; color: #666; }
-        td { padding: 12px 10px; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
+        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1px solid #eee; }
+        table { width: 100%; min-width: 450px; border-collapse: collapse; }
+        th, td { padding: 10px 8px; font-size: 0.8rem; text-align: left; }
 
-        .btn { padding: 10px 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; }
-        .btn-main { background: var(--primary-color); color: white; width: 100%; }
-        .btn-view { background: #f0f7ff; color: var(--primary-color); font-size: 0.75rem; width: 100%; }
-        .btn-outline { background: #f0f0f0; color: #555; }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-        .modal-content { background: white; width: 92%; max-width: 400px; margin: 10vh auto; padding: 20px; border-radius: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1.5px solid #eee; border-radius: 10px; font-size: 16px; outline: none; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        .modal-content { background: white; width: 92%; max-width: 400px; margin: 15% auto; padding: 20px; border-radius: 20px; }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #eee; border-radius: 10px; font-size: 16px; }
 
         @media (min-width: 768px) {
-            .fc-toolbar { flex-direction: row; justify-content: space-between; }
+            #calendar { font-size: 1rem; }
             .fc-toolbar-title { font-size: 1.3rem !important; }
-            .summary-header { flex-direction: row; align-items: center; justify-content: space-between; }
-            .stats-group { width: auto; }
-            .stat-item { width: 120px; font-size: 0.85rem; flex-direction: row; gap: 10px; }
-            .btn-main { width: auto; }
+            .stat-item { font-size: 0.85rem; padding: 12px; }
         }
     </style>
 </head>
@@ -70,33 +64,25 @@
     <div id="userSelectionPage">
         <h1 style="color: var(--primary-color);">Service Request</h1>
         <div class="user-grid" id="userList"></div>
-        <button class="btn btn-outline" style="margin-top: 30px;" onclick="openAddUserModal()">+ เพิ่มรายชื่อพนักงาน</button>
     </div>
 
     <div id="mainDashboard">
         <div class="header">
-            <div>
-                <h2 style="margin:0; font-size: 1.2rem;">Service Request</h2>
-                <small id="currentUserName" style="color: var(--primary-color); font-weight: bold;"></small>
-            </div>
-            <button class="btn btn-outline" style="font-size: 0.75rem;" onclick="logout()">ออกจากระบบ</button>
+            <div><b id="currentUserName" style="color: var(--primary-color);"></b></div>
+            <button onclick="location.reload()" style="background: #eee; border: none; padding: 5px 12px; border-radius: 8px; font-size: 0.75rem;">ออกจากระบบ</button>
         </div>
 
         <div class="card"><div id="calendar"></div></div>
 
         <div class="card">
-            <div class="summary-header">
-                <div class="stats-group">
-                    <div class="stat-item" style="border-top: 3px solid #1a73e8;"><span>ทั้งหมด</span> <span id="totalTasks">0</span></div>
-                    <div class="stat-item" style="border-top: 3px solid var(--success-color);"><span>เสร็จสิ้น</span> <span id="doneTasks">0</span></div>
-                    <div class="stat-item" style="border-top: 3px solid var(--pending-color);"><span>กำลังทำ</span> <span id="pendingTasks">0</span></div>
-                </div>
+            <div class="stats-group">
+                <div class="stat-item" style="border-top: 3px solid #1a73e8;">ทั้งหมด <span id="totalTasks">0</span></div>
+                <div class="stat-item" style="border-top: 3px solid var(--success-color);">เสร็จสิ้น <span id="doneTasks">0</span></div>
+                <div class="stat-item" style="border-top: 3px solid var(--pending-color);">ค้างอยู่ <span id="pendingTasks">0</span></div>
             </div>
             <div class="table-container">
                 <table>
-                    <thead>
-                        <tr><th>รหัส Service Request</th><th>กำหนดเสร็จ</th><th>สถานะ</th><th style="text-align: center;">แอคชั่น</th></tr>
-                    </thead>
+                    <thead><tr><th>รหัส Service Request</th><th>วันที่</th><th>สถานะ</th><th></th></tr></thead>
                     <tbody id="taskTableBody"></tbody>
                 </table>
             </div>
@@ -123,18 +109,16 @@
         const db = getDatabase(app);
         let currentUser = null, myTasks = [];
 
-        // ฟังก์ชันเลือก View อัตโนมัติ (สำคัญเพื่อให้ขึ้นในมือถือ)
-        const getMode = () => window.innerWidth < 768 ? 'listMonth' : 'dayGridMonth';
-
         const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
             locale: 'th',
-            initialView: getMode(),
+            initialView: 'dayGridMonth', // กลับมาใช้แบบตารางตามความต้องการ
             height: 'auto',
+            aspectRatio: 1.1, // บังคับสัดส่วนให้พอดีจอมือถือ
             handleWindowResize: true,
             headerToolbar: {
-                left: 'prev,next today',
+                left: 'prev,next',
                 center: 'title',
-                right: window.innerWidth < 768 ? '' : 'dayGridMonth,listMonth'
+                right: 'today'
             },
             dateClick: (info) => handleInteraction(info.dateStr),
             eventClick: (info) => handleInteraction(info.event.startStr, info.event.id),
@@ -154,8 +138,7 @@
             if (snapshot.exists()) {
                 Object.entries(snapshot.val()).forEach(([id, data]) => {
                     const div = document.createElement('div');
-                    div.className = 'user-card';
-                    div.innerHTML = `<div style="font-size: 1.5rem;">👤</div><div style="font-weight:bold; font-size: 0.85rem; margin-top:5px;">${data.name}</div>`;
+                    div.className = 'user-card'; div.innerHTML = `👤<br>${data.name}`;
                     div.onclick = () => login(id, data.name); userList.appendChild(div);
                 });
             }
@@ -165,15 +148,9 @@
             currentUser = { id, name };
             document.getElementById('userSelectionPage').style.display = 'none';
             document.getElementById('mainDashboard').style.display = 'block';
-            document.getElementById('currentUserName').innerText = `พนักงาน: ${name}`;
+            document.getElementById('currentUserName').innerText = name;
             loadTasks();
-            
-            // บังคับให้ปฏิทินวาดใหม่ (แก้มือถือไม่ขึ้น)
-            setTimeout(() => { 
-                calendar.changeView(getMode());
-                calendar.render(); 
-                calendar.updateSize(); 
-            }, 300);
+            setTimeout(() => { calendar.render(); calendar.updateSize(); }, 300);
         };
 
         function loadTasks() {
@@ -184,7 +161,7 @@
                 }
                 calendar.removeAllEvents();
                 calendar.addEventSource(myTasks.map(t => ({
-                    id: t.id, title: `SR: ${t.srCode}`, start: t.deadline,
+                    id: t.id, title: t.srCode, start: t.deadline,
                     color: t.status === 'done' ? '#2ecc71' : '#00aaff'
                 })));
                 renderTable();
@@ -194,18 +171,22 @@
         function renderTable() {
             const tbody = document.getElementById('taskTableBody'); tbody.innerHTML = '';
             let done = 0;
-            myTasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline)).forEach(t => {
+            myTasks.sort((a,b) => new Date(b.deadline) - new Date(a.deadline)).forEach(t => {
                 if (t.status === 'done') done++;
-                tbody.innerHTML += `<tr><td><b>${t.srCode}</b></td><td>${t.deadline}</td><td><span class="status-badge" style="background:${t.status === 'done' ? 'var(--success-color)' : 'var(--pending-color)'}; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.75rem;">${t.status === 'done' ? 'เสร็จ' : 'กำลังทำ'}</span></td><td style="text-align: center;"><button class="btn btn-view" onclick="viewTaskDetail('${t.id}')">ดูงาน</button></td></tr>`;
+                tbody.innerHTML += `<tr><td><b>${t.srCode}</b></td><td>${t.deadline}</td><td>${t.status === 'done' ? '✅' : '⏳'}</td><td><button onclick="openManageTaskModal('${t.id}')" style="padding:4px 8px; border-radius:5px; border:1px solid #ddd;">จัดการ</button></td></tr>`;
             });
             document.getElementById('totalTasks').innerText = myTasks.length;
             document.getElementById('doneTasks').innerText = done;
             document.getElementById('pendingTasks').innerText = myTasks.length - done;
         }
 
-        // --- ฟังชันงานต่างๆ คงเดิม ---
         window.openAddTaskModal = (date) => {
-            document.getElementById('modalBody').innerHTML = `<h3>บันทึกงานใหม่</h3><p>${date}</p><input type="text" id="srCode" placeholder="รหัส Service Request"><textarea id="taskDetail" placeholder="รายละเอียด"></textarea><button class="btn btn-main" onclick="saveTask('${date}')">บันทึก</button><button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal()">ยกเลิก</button>`;
+            document.getElementById('modalBody').innerHTML = `
+                <h3>บันทึกงานใหม่</h3><p>${date}</p>
+                <input type="text" id="srCode" placeholder="รหัส Service Request">
+                <textarea id="taskDetail" placeholder="รายละเอียดงาน" style="width:100%; height:80px; border-radius:10px; border:1px solid #ddd; padding:10px;"></textarea>
+                <button onclick="saveTask('${date}')" style="width:100%; background:var(--primary-color); color:white; padding:12px; border-radius:10px; border:none; margin-top:10px; font-weight:bold;">บันทึก</button>
+                <button onclick="closeModal()" style="width:100%; background:none; border:none; margin-top:10px;">ยกเลิก</button>`;
             document.getElementById('appModal').style.display = 'block';
         };
 
@@ -216,25 +197,17 @@
 
         window.openManageTaskModal = (id) => {
             const task = myTasks.find(t => t.id === id);
-            document.getElementById('modalBody').innerHTML = `<h3>จัดการงาน</h3><p>SR: ${task.srCode}</p><button class="btn btn-main" style="background:var(--success-color);" onclick="updateStatus('${id}', 'done')">✔️ เสร็จสิ้น</button><button class="btn btn-outline" style="width:100%; color:red; margin-top:10px;" onclick="deleteTask('${id}')">🗑️ ลบงาน</button><button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal()">ปิด</button>`;
-            document.getElementById('appModal').style.display = 'block';
-        };
-
-        window.viewTaskDetail = (id) => {
-            const t = myTasks.find(item => item.id === id);
-            document.getElementById('modalBody').innerHTML = `<h3>รายละเอียด</h3><p><b>รหัส SR:</b> ${t.srCode}</p><p>${t.detail || '-'}</p><button class="btn btn-outline" style="width:100%" onclick="closeModal()">ปิด</button>`;
+            document.getElementById('modalBody').innerHTML = `
+                <h3>จัดการงาน</h3><p>SR: ${task.srCode}</p>
+                <button onclick="updateStatus('${id}', 'done')" style="width:100%; background:#2ecc71; color:white; padding:12px; border-radius:10px; border:none; font-weight:bold;">✅ เสร็จสิ้นงานนี้</button>
+                <button onclick="deleteTask('${id}')" style="width:100%; color:red; border:none; background:none; margin-top:10px;">🗑️ ลบงาน</button>
+                <button onclick="closeModal()" style="width:100%; border:none; background:none; margin-top:10px;">ปิด</button>`;
             document.getElementById('appModal').style.display = 'block';
         };
 
         window.updateStatus = (id, s) => { update(ref(db, `service_requests/${id}`), { status: s }); closeModal(); };
         window.deleteTask = (id) => { if(confirm("ลบงานนี้?")) { remove(ref(db, `service_requests/${id}`)); closeModal(); } };
         window.closeModal = () => document.getElementById('appModal').style.display = 'none';
-        window.logout = () => location.reload();
-
-        window.addEventListener('resize', () => {
-            calendar.changeView(getMode());
-            calendar.updateSize();
-        });
     </script>
 </body>
 </html>
