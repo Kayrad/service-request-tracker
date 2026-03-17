@@ -19,57 +19,57 @@
         * { box-sizing: border-box; font-family: 'Chakra Petch', sans-serif; }
         body { background-color: var(--bg-color); margin: 0; padding: 0; font-size: 16px; color: var(--text-main); -webkit-tap-highlight-color: transparent; }
 
-        /* หน้าเลือก User */
         #userSelectionPage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; width: 100%; max-width: 800px; margin-top: 20px; }
         .user-card { background: var(--card-bg); padding: 20px 10px; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid transparent; }
         .user-card:hover { border-color: var(--primary-color); transform: translateY(-3px); }
 
-        /* Dashboard */
         #mainDashboard { display: none; padding: 10px; max-width: 1200px; margin: auto; }
         .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-        .card { background: var(--card-bg); padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        
+        /* --- แก้ไขเฉพาะบล็อกปฏิทิน --- */
+        .card-calendar { 
+            background: var(--card-bg); 
+            padding: 10px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            margin-bottom: 15px;
+            width: 100%;
+            overflow-x: auto; /* ยอมให้เลื่อนซ้ายขวาได้ถ้าล้น */
+        }
+        #calendar { 
+            min-width: 300px; /* บังคับความกว้างขั้นต่ำไม่ให้เบี้ยว */
+            max-width: 100%;
+        }
+        /* ปรับสเกลปฏิทินในมือถือ */
+        @media (max-width: 768px) {
+            .fc { font-size: 0.75rem !important; }
+            .fc-toolbar-title { font-size: 0.9rem !important; }
+            .fc-button { padding: 2px 5px !important; font-size: 0.7rem !important; }
+        }
+        /* ------------------------- */
 
-        /* สรุปสถานะงาน (Stats Bar) */
+        .card { background: var(--card-bg); padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .summary-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         .stats-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; }
         .stat-item { padding: 10px 5px; border-radius: 10px; font-weight: bold; font-size: 0.7rem; text-align: center; display: flex; flex-direction: column; background: #fff; border: 1px solid #eee; }
-        
-        /* --- แก้ไขเฉพาะจุด: ป้องกันปฏิทินล้นขอบมือถือ --- */
-        #calendar { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 5px; 
-            max-width: 100% !important; /* ล็อกความกว้างห้ามล้นหน้าจอ */
-            overflow: hidden;
-        }
-        .fc { font-size: 0.8rem !important; } /* ลดขนาดฟอนต์ปฏิทินลงเล็กน้อยให้พอดีจอ */
-        .fc-toolbar { flex-direction: column; gap: 5px; }
-        .fc-toolbar-title { font-size: 1rem !important; }
-        .fc-button { padding: 4px 8px !important; font-size: 0.75rem !important; }
-        /* ------------------------------------------- */
-
-        /* Table สำหรับ Mobile */
         .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; border: 1px solid #eee; }
         table { width: 100%; min-width: 480px; border-collapse: collapse; }
         th { background: #fcfcfc; text-align: left; padding: 12px 10px; border-bottom: 2px solid #eee; font-size: 0.8rem; color: #666; }
         td { padding: 12px 10px; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
         .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: #fff; }
 
-        /* Buttons */
         .btn { padding: 10px 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; }
         .btn-main { background: var(--primary-color); color: white; width: 100%; }
         .btn-view { background: #f0f7ff; color: var(--primary-color); font-size: 0.75rem; width: 100%; }
         .btn-export { background: #e8f5e9; color: #2e7d32; width: 100%; }
         .btn-outline { background: #f0f0f0; color: #555; }
 
-        /* Modal */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
         .modal-content { background: white; width: 92%; max-width: 400px; margin: 10vh auto; padding: 20px; border-radius: 20px; }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1.5px solid #eee; border-radius: 10px; font-size: 16px; outline: none; }
         .info-box { background: #f9f9f9; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary-color); font-size: 0.9rem; }
 
-        /* Desktop Style */
         @media (min-width: 768px) {
             #mainDashboard { padding: 20px; }
             .fc-toolbar { flex-direction: row; justify-content: space-between; }
@@ -100,7 +100,7 @@
             <button class="btn btn-outline" style="font-size: 0.75rem;" onclick="logout()">ออกจากระบบ</button>
         </div>
 
-        <div class="card"><div id="calendar"></div></div>
+        <div class="card-calendar"><div id="calendar"></div></div>
 
         <div class="card">
             <div class="summary-header">
@@ -168,18 +168,22 @@
             locale: 'th', initialView: 'dayGridMonth',
             height: 'auto',
             handleWindowResize: true,
-            aspectRatio: window.innerWidth < 768 ? 0.9 : 1.35, // ปรับสัดส่วนให้พอดีจอ
+            aspectRatio: window.innerWidth < 768 ? 0.8 : 1.35, // ปรับสัดส่วนให้คงที่ในมือถือ
             dateClick: (info) => handleInteraction(info.dateStr),
             eventClick: (info) => handleInteraction(info.event.startStr, info.event.id), 
             events: []
         });
 
         function handleInteraction(dateStr, eventId = null) {
-            if (eventId) { window.openManageTaskModal(eventId); } 
-            else {
+            if (eventId) {
+                window.openManageTaskModal(eventId);
+            } else {
                 const existingTask = myTasks.find(t => t.deadline === dateStr);
-                if (existingTask) { window.openManageTaskModal(existingTask.id); } 
-                else { window.openAddTaskModal(dateStr); }
+                if (existingTask) {
+                    window.openManageTaskModal(existingTask.id);
+                } else {
+                    window.openAddTaskModal(dateStr);
+                }
             }
         }
 
